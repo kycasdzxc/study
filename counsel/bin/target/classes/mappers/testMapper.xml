@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.crizen.mapper.boardDAO">
+	<select id="list" resultType="counsel">
+		SELECT * FROM COUNSEL_INFO ORDER BY 5
+	</select>
+</mapper>
