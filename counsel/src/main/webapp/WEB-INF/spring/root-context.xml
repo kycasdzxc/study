@@ -29,4 +29,5 @@
 	</bean>
 	
     <mybatis-spring:scan base-package="com.crizen.mapper" />
+    <context:component-scan base-package="com.crizen.service" />
 </beans>

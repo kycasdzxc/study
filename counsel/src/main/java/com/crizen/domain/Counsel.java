@@ -1,14 +1,13 @@
 package com.crizen.domain;
 
 import org.apache.ibatis.type.Alias;
-import org.springframework.stereotype.Repository;
 
 import lombok.Data;
 
 @Data
 @Alias("counsel")
 public class Counsel {
-	
+
 	private int counsel_bno;
 	private String counsel_title;
 	private String counsel_content;

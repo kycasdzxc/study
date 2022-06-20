@@ -2,13 +2,17 @@ package com.crizen.mapper;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.crizen.domain.Counsel;
 
-@Repository
 public interface BoardMapper {
 	
-	List<Counsel> list();
+	List<Counsel> getList();
 	
+	Counsel read(int counsel_bno);
+	
+	int insert(Counsel counsel);
+	
+	int update(Counsel counsel);
+	
+	int delete(int counsel_bno);
 }
