@@ -6,7 +6,8 @@
 	<select id="getList" resultType="counsel">
 		SELECT
 			COUNSEL_BNO, COUNSEL_TITLE, COUNSEL_WRITER,
-			DATE_FORMAT(COUNSEL_REGDATE, "%Y-%m-%d") COUNSEL_REGDATE
+			DATE_FORMAT(COUNSEL_REGDATE, "%Y-%m-%d") COUNSEL_REGDATE,
+			COUNSEL_REPLYCNT
 		FROM COUNSEL_INFO ORDER BY 1 DESC
 	</select>
 	
@@ -28,10 +29,44 @@
 	
 	<update id="update">
 		UPDATE COUNSEL_INFO SET
-		COUNSEL_TITLE = #{counsel_title}, COUNSEL_CONTENT = #{counsel_content} WHERE COUNSEL_BNO = #{counsel_bno}
+		COUNSEL_TITLE = #{counsel_title}, COUNSEL_CONTENT = #{counsel_content}, COUNSEL_WRITER = #{counsel_writer} WHERE COUNSEL_BNO = #{counsel_bno}
 	</update>
 	
 	<delete id="delete">
 		DELETE FROM COUNSEL_INFO WHERE COUNSEL_BNO = #{counsel_bno}
 	</delete>
+	
+	<select id="findRemoveList" resultType="counsel">
+		<![CDATA[
+			SELECT * FROM COUNSEL_INFO WHERE DATEDIFF(COUNSEL_REGDATE, NOW()) <= -5
+		]]>
+	</select>
+	
+	<select id="findSlangList" resultType="counsel">
+		SELECT
+			A.COUNSEL_BNO,
+			REGEXP_REPLACE(A.COUNSEL_TITLE, (SELECT GROUP_CONCAT(COUNSEL_SLANG SEPARATOR "|") FROM COUNSEL_SLANG), '*****') COUNSEL_TITLE,
+			REGEXP_REPLACE(A.COUNSEL_CONTENT, (SELECT GROUP_CONCAT(COUNSEL_SLANG SEPARATOR "|") FROM COUNSEL_SLANG), '*****') COUNSEL_CONTENT,
+			REGEXP_REPLACE(A.COUNSEL_WRITER, (SELECT GROUP_CONCAT(COUNSEL_SLANG SEPARATOR "|") FROM COUNSEL_SLANG), '*****') COUNSEL_WRITER
+		FROM (
+			SELECT * FROM COUNSEL_INFO
+			WHERE CONCAT(COUNSEL_TITLE, COUNSEL_CONTENT, COUNSEL_WRITER) REGEXP (SELECT GROUP_CONCAT(COUNSEL_SLANG SEPARATOR "|") FROM COUNSEL_SLANG)
+		) A
+	</select>
+	
+	<select id="getSlangList" resultType="slang">
+		SELECT * FROM COUNSEL_SLANG
+	</select>
+	
+	<insert id="addSlang">
+		INSERT INTO COUNSEL_SLANG VALUES (#{counsel_slang})
+	</insert>
+	
+	<delete id="removeSlang">
+		DELETE FROM COUNSEL_SLANG WHERE COUNSEL_SLANG = #{counsel_slang}
+	</delete>
+	
+	<update id="updateReplyCnt">
+		UPDATE COUNSEL_INFO SET COUNSEL_REPLYCNT = COUNSEL_REPLYCNT + #{amount} WHERE COUNSEL_BNO = #{counsel_bno}
+	</update>
 </mapper>

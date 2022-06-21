@@ -61,4 +61,14 @@ public class ReplyMapperTests {
 	public void testDelete() {
 		mapper.delete(15);
 	}
+	
+	@Test
+	public void testDeleteAll() {
+		mapper.deleteAll(14);
+	}
+	
+	@Test
+	public void testGetSlangList() {
+		mapper.findSlangList().forEach(log::info);
+	}
 }

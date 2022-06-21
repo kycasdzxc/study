@@ -11,8 +11,9 @@
 <body>
 	<div class="container w-75 mb-4">
 		<div class="mt-3">
-			<h1 class="d-inline">게시글 목록</h1>
+			<h1 class="d-inline fw-bold">게시글 목록</h1>
 			<a href="${pageContext.request.contextPath}/board/register" class="btn btn-outline-success mt-3 mb-2 float-end">게시글 작성</a>
+			<a href="${pageContext.request.contextPath}/board/slangList" class="btn btn-outline-info mt-3 mb-2 mx-2 float-end">비속어 관리</a>
 		</div>
 		<table class="table table-bordered table-hover">
 			<thead class="table-success text-center">
@@ -27,7 +28,7 @@
 			<c:forEach items="${boards}" var="b">
 				<tr>
 					<td class="text-center">${b.counsel_bno}</td>
-					<td><a href="${pageContext.request.contextPath}/board/get?counsel_bno=${b.counsel_bno}" class="text-success" style="text-decoration:none">${b.counsel_title}</a></td>
+					<td><a href="${pageContext.request.contextPath}/board/get?counsel_bno=${b.counsel_bno}" class="text-success fw-bold" style="text-decoration:none">${b.counsel_title}<small> [${b.counsel_replyCnt}]</small></a></td>
 					<td class="text-center">${b.counsel_writer}</td>
 					<td class="text-center">${b.counsel_regDate}</td>
 				</tr>

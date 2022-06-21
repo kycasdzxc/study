@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.crizen.domain.Counsel;
+import com.crizen.domain.Slang;
 import com.crizen.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -38,5 +39,19 @@ public class BoardServiceImpl implements BoardService {
 	public boolean remove(int counsel_bno) {
 		return boardMapper.delete(counsel_bno) > 0;
 	}
-
+	
+	@Override
+	public List<Slang> getSlangList() {
+		return boardMapper.getSlangList();
+	}
+	
+	@Override
+	public boolean addSlang(Slang slang) {
+		return boardMapper.addSlang(slang) > 0;
+	}
+	
+	@Override
+	public boolean removeSlang(Slang slang) {
+		return boardMapper.removeSlang(slang) > 0;
+	}
 }

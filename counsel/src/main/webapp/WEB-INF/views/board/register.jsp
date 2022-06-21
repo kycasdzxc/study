@@ -4,14 +4,14 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>게시글 수정</title>
+	<title>게시글 작성</title>
 	<link href="../resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 	<script src="../resources/bootstrap/bootstrap.min.js"></script>
 	<script src="../resources/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	<div class="container w-75">
-		<h1 class="my-3">게시글 작성</h1>
+		<h1 class="my-3 fw-bold">게시글 작성</h1>
 		<form method="post" id="fmt">
 			<div class="card px-4 pb-3">
 				<h5 class="mt-3">- 글제목</h5>

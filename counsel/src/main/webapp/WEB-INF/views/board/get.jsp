@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class="container w-75">
-		<h1 class="my-3">게시글 상세조회</h1>
+		<h1 class="my-3 fw-bold">게시글 상세조회</h1>
 		<div class="card px-4 pb-3">
 			<h5 class="mt-3">- 글번호</h5>
 			<input type="text" class="form-control px-3 py-1" value="${board.counsel_bno}" readonly>
@@ -125,9 +125,14 @@
 				var rno = $dom.data("rno");
 				console.log(rno);
 				replyService.remove({counsel_reply_rno:rno}, function(result) {
-					alert("댓글 삭제 완료");
-					$dom.next().remove();
-					$dom.remove();
+					var checkRemove = confirm("댓글을 삭제하시겠습니까?");
+					if(checkRemove) {
+						alert("댓글 삭제 완료");
+						$dom.next().remove();
+						$dom.remove();
+					} else {
+						event.preventDefault();
+					}
 				})
 			})
 			
@@ -147,7 +152,8 @@
 				var $replyContent = $(this).closest(".reply-content");
 				var rno = $replyContent.prev().data("rno");
 				var content = $replyContent.find("textarea").val();
-				var reply = {counsel_reply_rno:rno, counsel_reply_content:content};
+				var writer = $replyContent.find("strong").text();
+				var reply = {counsel_reply_rno:rno, counsel_reply_content:content, counsel_reply_writer:writer};
 				
 				replyService.update(reply, function(result) {
 					alert("댓글 수정 완료");

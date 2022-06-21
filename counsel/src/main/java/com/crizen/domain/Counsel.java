@@ -13,4 +13,6 @@ public class Counsel {
 	private String counsel_content;
 	private String counsel_writer;
 	private String counsel_regDate;
+	
+	private int counsel_replyCnt;
 }

@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.crizen.domain.Counsel;
+import com.crizen.domain.Slang;
 import com.crizen.service.BoardService;
+import com.crizen.service.ReplyService;
 
 import lombok.AllArgsConstructor;
 
@@ -17,6 +19,7 @@ import lombok.AllArgsConstructor;
 public class BoardController {
 
 	private BoardService boardService;
+	private ReplyService replyService;
 	
 	@GetMapping("list")
 	public String list(Model model) {
@@ -48,7 +51,25 @@ public class BoardController {
 	
 	@PostMapping("remove")
 	public String remove(int counsel_bno) {
+		replyService.removeAll(counsel_bno);
 		boardService.remove(counsel_bno);
 		return "redirect:/board/list";
+	}
+	
+	@GetMapping("slangList")
+	public void slangList(Model model) {
+		model.addAttribute("slangs", boardService.getSlangList());
+	}
+	
+	@PostMapping("addSlang")
+	public String addSlang(Slang slang) {
+		boardService.addSlang(slang);
+		return "redirect:/board/slangList";
+	}
+	
+	@GetMapping("removeSlang")
+	public String removeSlang(Slang slang) {
+		boardService.removeSlang(slang);
+		return "redirect:/board/slangList";
 	}
 }

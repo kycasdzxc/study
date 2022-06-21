@@ -14,5 +14,9 @@ public interface ReplyMapper {
 	
 	int update(Reply reply);
 	
-	int delete(int reply_rno);
+	int delete(int counsel_reply_rno);
+
+	int deleteAll(int counsel_reply_bno);
+	
+	List<Reply> findSlangList();
 }

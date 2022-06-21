@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.crizen.domain.Counsel;
+import com.crizen.domain.Slang;
 import com.crizen.mapper.BoardMapper;
 
 import lombok.Setter;
@@ -61,5 +62,41 @@ public class BoardMapperTests {
 	@Test
 	public void testDelete() {
 		mapper.delete(16);
+	}
+	
+	@Test
+	public void testFindRemoveList() {
+		mapper.findRemoveList().forEach(log::info);
+	}
+	
+	@Test
+	public void testFindSlangList() {
+		mapper.findSlangList().forEach(log::info);
+	}
+	
+	@Test
+	public void testSlangList() {
+		mapper.getSlangList().forEach(log::info);
+	}
+	
+	@Test
+	public void testAddSlang() {
+		Slang slang = new Slang();
+		slang.setCounsel_slang("멍청이");
+		
+		mapper.addSlang(slang);
+	}
+	
+	@Test
+	public void testRemoveSlang() {
+		Slang slang = new Slang();
+		slang.setCounsel_slang("멍청이");
+		
+		mapper.removeSlang(slang);
+	}
+	
+	@Test
+	public void testUpdateReplyCnt() {
+		log.info(mapper.updateReplyCnt(1016, 1));
 	}
 }

@@ -15,5 +15,7 @@ public interface ReplyService {
 	boolean modify(Reply reply);
 	
 	boolean remove(int counsel_reply_rno);
+
+	boolean removeAll(int counsel_reply_bno);
 	
 }

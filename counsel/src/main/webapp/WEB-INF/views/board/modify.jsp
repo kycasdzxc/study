@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="container w-75">
-		<h1 class="my-3">게시글 수정</h1>
+		<h1 class="my-3 fw-bold">게시글 수정</h1>
 		<form method="post" id="fmt">
 			<div class="card px-4 pb-3">
 				<h5 class="mt-3">- 글번호</h5>
@@ -21,7 +21,7 @@
 				<h5 class="mt-3">- 글내용</h5>
 				<textarea class="form-control" rows="3" name="counsel_content">${board.counsel_content}</textarea>
 				<h5 class="mt-3">- 작성자</h5>
-				<input type="text" class="form-control px-3 py-1" value="${board.counsel_writer}" readonly>
+				<input type="text" class="form-control px-3 py-1" name="counsel_writer" value="${board.counsel_writer}" readonly>
 				<h5 class="mt-3">- 작성시간</h5>
 				<input type="text" class="form-control px-3 py-1" value="${board.counsel_regDate}" readonly>
 				<div class="pt-3">
@@ -56,7 +56,12 @@ event.preventDefault();
 				$("#fmt").submit();
 			})
 			$("#btn-remove").click(function() {
-				alert("게시글 삭제 완료")
+				var checkRemove = confirm("게시글을 삭제하시겠습니까?");
+				if(checkRemove) {
+					alert("게시글 삭제 완료")
+				} else {
+					event.preventDefault();
+				}
 			})
 		})
 	</script>
