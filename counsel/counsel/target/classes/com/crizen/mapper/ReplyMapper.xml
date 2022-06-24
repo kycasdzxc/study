@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.crizen.mapper.ReplyMapper">
+
+	<select id="getList" resultType="reply">
+		SELECT
+			COUNSEL_REPLY_RNO, COUNSEL_REPLY_CONTENT, COUNSEL_REPLY_WRITER,
+			DATE_FORMAT(COUNSEL_REPLY_REGDATE, "%Y-%m-%d %H:%i:%s") COUNSEL_REPLY_REGDATE,
+			COUNSEL_REPLY_BNO
+		FROM COUNSEL_REPLY
+		WHERE COUNSEL_REPLY_BNO = #{reply_bno}
+		ORDER BY 4 DESC
+	</select>
+	
+    <select id="read" resultType="reply">
+		SELECT
+			COUNSEL_REPLY_RNO, COUNSEL_REPLY_CONTENT, COUNSEL_REPLY_WRITER, COUNSEL_REPLY_BNO,
+			DATE_FORMAT(COUNSEL_REPLY_REGDATE, "%Y-%m-%d %H:%i:%s") COUNSEL_REPLY_REGDATE
+		FROM COUNSEL_REPLY
+    	WHERE COUNSEL_REPLY_RNO = #{counsel_reply_rno}
+    </select>
+	
+	<insert id="insert">
+		<selectKey keyProperty="counsel_reply_rno" order="BEFORE" resultType="int">
+			SELECT NEXTVAL(SEQ_COUNSEL_REPLY) FROM DUAL
+		</selectKey>
+		INSERT INTO COUNSEL_REPLY (COUNSEL_REPLY_RNO, COUNSEL_REPLY_CONTENT, COUNSEL_REPLY_WRITER, COUNSEL_REPLY_BNO)
+		VALUES (#{counsel_reply_rno}, #{counsel_reply_content}, #{counsel_reply_writer}, #{counsel_reply_bno})
+	</insert>
+	
+	<update id="update">
+		UPDATE COUNSEL_REPLY SET
+		COUNSEL_REPLY_CONTENT = #{counsel_reply_content}, COUNSEL_REPLY_WRITER = #{counsel_reply_writer} WHERE COUNSEL_REPLY_RNO = #{counsel_reply_rno}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM COUNSEL_REPLY WHERE COUNSEL_REPLY_RNO = #{counsel_reply_rno}
+	</delete>
+	
+	<delete id="deleteAll">
+		DELETE FROM COUNSEL_REPLY WHERE COUNSEL_REPLY_BNO = #{counsel_reply_bno}
+	</delete>
+	
+	<select id="findSlangList" resultType="reply">
+		SELECT
+			A.COUNSEL_REPLY_RNO,
+			REGEXP_REPLACE(A.COUNSEL_REPLY_CONTENT, (SELECT GROUP_CONCAT(COUNSEL_SLANG SEPARATOR "|") FROM COUNSEL_SLANG), '*****') COUNSEL_REPLY_CONTENT,
+			REGEXP_REPLACE(A.COUNSEL_REPLY_WRITER, (SELECT GROUP_CONCAT(COUNSEL_SLANG SEPARATOR "|") FROM COUNSEL_SLANG), '*****') COUNSEL_REPLY_WRITER
+		FROM (
+			SELECT * FROM COUNSEL_REPLY
+			WHERE CONCAT(COUNSEL_REPLY_CONTENT, COUNSEL_REPLY_WRITER) REGEXP (SELECT GROUP_CONCAT(COUNSEL_SLANG SEPARATOR "|") FROM COUNSEL_SLANG)
+		) A
+	</select>
+</mapper>
