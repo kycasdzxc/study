@@ -16,8 +16,7 @@
 			authentication-success-handler-ref="loginSuccessHandler"
 		/>
 		<security:logout logout-url="/logout" logout-success-url="/board/list" />
-		<security:csrf disabled="true" />
-		<security:intercept-url pattern="/**" access="hasIpAddress('127.0.0.1')" />
+		<security:intercept-url pattern="/controller/**" access="hasIpAddress('127.0.0.1')" />
 	</security:http>
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="userDetailsService">

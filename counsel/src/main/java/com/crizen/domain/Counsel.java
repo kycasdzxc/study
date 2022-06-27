@@ -20,4 +20,7 @@ public class Counsel {
 	
 	private String counsel_updateWriter;
 	private String counsel_updateDate;
+	
+	private String counsel_keyword;
+	private String counsel_type;
 }

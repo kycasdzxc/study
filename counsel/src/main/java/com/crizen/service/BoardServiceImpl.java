@@ -16,8 +16,8 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper boardMapper;
 	
 	@Override
-	public List<Counsel> getList() {
-		return boardMapper.getList();
+	public List<Counsel> getList(Counsel counsel) {
+		return boardMapper.getList(counsel);
 	}
 
 	@Override

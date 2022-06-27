@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,7 @@
 	<div class="container w-75">
 		<h1 class="my-3 fw-bold">게시글 작성</h1>
 		<form method="post" id="fmt">
+			<sec:csrfInput/>
 			<div class="card px-4 pb-3">
 				<h5 class="mt-3">- 글제목</h5>
 				<input type="text" class="form-control px-3 py-1" name="counsel_title">

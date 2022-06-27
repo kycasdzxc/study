@@ -9,7 +9,7 @@ import com.crizen.domain.Slang;
 
 public interface BoardService {
 
-	List<Counsel> getList();
+	List<Counsel> getList(Counsel counsel);
 
 	Counsel get(int counsel_bno);
 

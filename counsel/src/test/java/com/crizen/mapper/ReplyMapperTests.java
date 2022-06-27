@@ -16,7 +16,7 @@ import lombok.extern.log4j.Log4j;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/security-context.xml"})
 @Log4j
 public class ReplyMapperTests {
 	
@@ -30,12 +30,12 @@ public class ReplyMapperTests {
 	
 	@Test
 	public void testGetList() {
-		mapper.getList(14).forEach(log::info);
+		mapper.getList(1039).forEach(log::info);
 	}
 	
 	@Test
 	public void testRead() {
-		log.info(mapper.read(24));
+		log.info(mapper.read(1038));
 	}
 	
 	@Test
@@ -43,7 +43,8 @@ public class ReplyMapperTests {
 		Reply reply = new Reply();
 		reply.setCounsel_reply_content("reply test");
 		reply.setCounsel_reply_writer("doong");
-		reply.setCounsel_reply_bno(14);
+		reply.setCounsel_reply_bno(1039);
+		reply.setCounsel_reply_userId("song");
 		
 		log.info(mapper.insert(reply));
 	}

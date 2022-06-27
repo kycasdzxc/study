@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/security-context.xml"})
 @Log4j
 public class BoardMapperTests {
 	
@@ -31,7 +31,9 @@ public class BoardMapperTests {
 	
 	@Test
 	public void testGetList() {
-		mapper.getList().forEach(log::info);
+		Counsel counsel = new Counsel();
+		counsel.setCounsel_type("W");
+		mapper.getList(counsel).forEach(log::info);
 	}
 	
 	@Test

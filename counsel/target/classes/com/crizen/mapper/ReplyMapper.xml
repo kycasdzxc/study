@@ -7,7 +7,7 @@
 		SELECT
 			COUNSEL_REPLY_RNO, COUNSEL_REPLY_CONTENT, COUNSEL_REPLY_WRITER,
 			DATE_FORMAT(COUNSEL_REPLY_REGDATE, "%Y-%m-%d %H:%i:%s") COUNSEL_REPLY_REGDATE,
-			COUNSEL_REPLY_BNO
+			COUNSEL_REPLY_BNO, COUNSEL_REPLY_USERID
 		FROM COUNSEL_REPLY
 		WHERE COUNSEL_REPLY_BNO = #{reply_bno}
 		ORDER BY 4 DESC
@@ -16,7 +16,8 @@
     <select id="read" resultType="reply">
 		SELECT
 			COUNSEL_REPLY_RNO, COUNSEL_REPLY_CONTENT, COUNSEL_REPLY_WRITER, COUNSEL_REPLY_BNO,
-			DATE_FORMAT(COUNSEL_REPLY_REGDATE, "%Y-%m-%d %H:%i:%s") COUNSEL_REPLY_REGDATE
+			DATE_FORMAT(COUNSEL_REPLY_REGDATE, "%Y-%m-%d %H:%i:%s") COUNSEL_REPLY_REGDATE,
+			COUNSEL_REPLY_USERID
 		FROM COUNSEL_REPLY
     	WHERE COUNSEL_REPLY_RNO = #{counsel_reply_rno}
     </select>
@@ -25,8 +26,8 @@
 		<selectKey keyProperty="counsel_reply_rno" order="BEFORE" resultType="int">
 			SELECT NEXTVAL(SEQ_COUNSEL_REPLY) FROM DUAL
 		</selectKey>
-		INSERT INTO COUNSEL_REPLY (COUNSEL_REPLY_RNO, COUNSEL_REPLY_CONTENT, COUNSEL_REPLY_WRITER, COUNSEL_REPLY_BNO)
-		VALUES (#{counsel_reply_rno}, #{counsel_reply_content}, #{counsel_reply_writer}, #{counsel_reply_bno})
+		INSERT INTO COUNSEL_REPLY (COUNSEL_REPLY_RNO, COUNSEL_REPLY_CONTENT, COUNSEL_REPLY_WRITER, COUNSEL_REPLY_BNO, COUNSEL_REPLY_USERID)
+		VALUES (#{counsel_reply_rno}, #{counsel_reply_content}, #{counsel_reply_writer}, #{counsel_reply_bno}, #{counsel_reply_userId})
 	</insert>
 	
 	<update id="update">

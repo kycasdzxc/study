@@ -8,7 +8,23 @@
 			COUNSEL_BNO, COUNSEL_TITLE, COUNSEL_WRITER, COUNSEL_UPDATEWRITER,
 			DATE_FORMAT(COUNSEL_REGDATE, "%Y-%m-%d") COUNSEL_REGDATE,
 			COUNSEL_REPLYCNT
-		FROM COUNSEL_INFO ORDER BY 1 DESC
+		FROM COUNSEL_INFO
+		<where>
+		<if test="counsel_type == 'T'.toString()">
+			COUNSEL_TITLE LIKE '%${counsel_keyword}%'
+		</if>
+		<if test="counsel_type == 'C'.toString()">
+			COUNSEL_TITLE LIKE '%${counsel_keyword}%'
+			OR COUNSEL_CONTENT LIKE '%${counsel_keyword}%'
+		</if>
+		<if test="counsel_type == 'W'.toString()">
+			COUNSEL_UPDATEWRITER LIKE '%${counsel_keyword}%'
+		</if>
+		<if test="counsel_type == 'D'.toString()">
+			COUNSEL_REGDATE LIKE '%${counsel_keyword}%'
+		</if>
+		</where>
+		ORDER BY 1 DESC
 	</select>
 	
 	<select id="read" resultType="counsel">
