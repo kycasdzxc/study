@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,23 +12,30 @@
 <body>
 	<div class="container w-75">
 		<h1 class="my-3 fw-bold">게시글 상세조회</h1>
-		<div class="card px-4 pb-3">
-			<h5 class="mt-3">- 글번호</h5>
-			<input type="text" class="form-control px-3 py-1" value="${board.counsel_bno}" readonly>
-			<h5 class="mt-3">- 글제목</h5>
-			<input type="text" class="form-control px-3 py-1" value="${board.counsel_title}" readonly>
-			<h5 class="mt-3">- 글내용</h5>
-			<textarea class="form-control" rows="3" readonly>${board.counsel_content}</textarea>
-			<h5 class="mt-3">- 작성자</h5>
-			<input type="text" class="form-control px-3 py-1" value="${board.counsel_writer}" readonly>
-			<h5 class="mt-3">- 작성시간</h5>
-			<input type="text" class="form-control px-3 py-1" value="${board.counsel_regDate}" readonly>
-			<div class="pt-3">
-				<a class="btn btn-outline-warning"
-					href="${pageContext.request.contextPath}/board/modify?counsel_bno=${board.counsel_bno}">수정</a>
-				<a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/board/list">목록</a>
+		<form method="post">
+			<div class="card px-4 pb-3">
+				<h5 class="mt-3">- 글번호</h5>
+				<input type="text" class="form-control px-3 py-1" name="counsel_bno" value="${board.counsel_bno}" readonly>
+				<h5 class="mt-3">- 글제목</h5>
+				<input type="text" class="form-control px-3 py-1" value="${board.counsel_title}" readonly>
+				<h5 class="mt-3">- 글내용</h5>
+				<textarea class="form-control" rows="3" readonly>${board.counsel_content}</textarea>
+				<h5 class="mt-3">- 작성자</h5>
+				<input type="text" class="form-control px-3 py-1" value="${board.counsel_updateWriter += (board.counsel_writer == board.counsel_updateWriter ? '' : ' (수정됨)')} / 아이디 : ${board.counsel_userId}" readonly>
+				<input type="hidden" class="form-control px-3 py-1" name="counsel_userId" value="${board.counsel_userId}" readonly>
+				<h5 class="mt-3">- 작성시간</h5>
+				<input type="text" class="form-control px-3 py-1" value="${board.counsel_regDate} ${board.counsel_regDate == board.counsel_updateDate ? '' : ('(수정시간 : ' += board.counsel_updateDate += ')')}" readonly>
+				<div class="pt-3 text-end">
+					<sec:authorize access="principal.username == #board.counsel_userId">
+					<a class="btn btn-outline-warning" href="${pageContext.request.contextPath}/board/modify?counsel_bno=${board.counsel_bno}&counsel_userId=${board.counsel_userId}">수정</a>
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_ADMIN') or principal.username == #board.counsel_userId">
+						<button type="submit" class="btn btn-outline-danger" id="btn-remove" formaction="remove">삭제</button>
+					</sec:authorize>
+					<a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/board/list">목록</a>
+				</div>
 			</div>
-		</div>
+		</form>
 		<hr>
 		<div class="card mb-4">
 			<div class="card-header py-3">

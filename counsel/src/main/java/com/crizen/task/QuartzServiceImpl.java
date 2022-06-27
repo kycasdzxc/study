@@ -2,6 +2,7 @@ package com.crizen.task;
 
 import java.util.List;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.crizen.domain.Counsel;
@@ -40,7 +41,7 @@ public class QuartzServiceImpl implements QuartzService {
 		List<Reply> replySlangs = replyMapper.findSlangList();
 		
 		for(Counsel c : boardSlangs) {
-			boardMapper.update(c);
+			boardMapper.changeSlang(c);
 		}
 		
 		for(Reply r : replySlangs) {

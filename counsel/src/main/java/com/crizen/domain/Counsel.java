@@ -15,4 +15,9 @@ public class Counsel {
 	private String counsel_regDate;
 	
 	private int counsel_replyCnt;
+	
+	private String counsel_userId;
+	
+	private String counsel_updateWriter;
+	private String counsel_updateDate;
 }
