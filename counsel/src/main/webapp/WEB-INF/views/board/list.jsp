@@ -18,7 +18,10 @@
 			<a href="${pageContext.request.contextPath}/member/login" class="btn btn-outline-primary mt-3 mb-2 me-2 float-end">로그인</a>
 			</sec:authorize>
 			<sec:authorize access="isAuthenticated()">
-			<a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-danger mt-3 mb-2 float-end">로그아웃</a>
+			<form action="${pageContext.request.contextPath}/logout" class="d-inline" name="logout" method="post" onsubmit="return confirm('로그아웃 하시겠습니까?')">
+				<button class="btn btn-outline-danger mt-3 mb-2 float-end">로그아웃</button>
+				<sec:csrfInput/>
+			</form>
 			<a href="${pageContext.request.contextPath}/board/register" class="btn btn-outline-success mt-3 mb-2 me-2 float-end">게시글 작성</a>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -47,22 +50,22 @@
 			</tbody>
 		</table>
 		<form>
-		<div class="row">
-			<div class="col-2">
-				<select class="form-select">
-					<option>제목</option>
-					<option>제목 + 내용</option>
-					<option>작성자</option>
-					<option>작성시간</option>
-				</select>
+			<div class="row">
+				<div class="col-2">
+					<select class="form-select" name="counsel_type">
+						<option value="T" ${counsel.counsel_type == 'T' ? 'selected' : ''}>제목</option>
+						<option value="C" ${counsel.counsel_type == 'C' ? 'selected' : ''}>제목 + 내용</option>
+						<option value="W" ${counsel.counsel_type == 'W' ? 'selected' : ''}>작성자</option>
+						<option value="D" ${counsel.counsel_type == 'D' ? 'selected' : ''}>작성시간</option>
+					</select>
+				</div>
+				<div class="col-2 p-0">
+					<input class="form-control" name="counsel_keyword" value="${counsel.counsel_keyword}">
+				</div>
+				<div class="col-1">
+					<button class="btn btn-secondary">검색</button>
+				</div>
 			</div>
-			<div class="col-2 p-0">
-				<input class="form-control">
-			</div>
-			<div class="col-1">
-				<button class="btn btn-secondary">검색</button>
-			</div>
-		</div>
 		</form>
 	</div>
 </body>

@@ -8,6 +8,7 @@
 <link href="../resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 <script src="../resources/bootstrap/bootstrap.min.js"></script>
 <script src="../resources/js/jquery-3.6.0.min.js"></script>
+<sec:csrfMetaTags/>
 </head>
 <body>
 	<div class="container w-75">
@@ -26,10 +27,10 @@
 				<h5 class="mt-3">- 작성시간</h5>
 				<input type="text" class="form-control px-3 py-1" value="${board.counsel_regDate} ${board.counsel_regDate == board.counsel_updateDate ? '' : ('(수정시간 : ' += board.counsel_updateDate += ')')}" readonly>
 				<div class="pt-3 text-end">
-					<sec:authorize access="principal.username == #board.counsel_userId">
+					<sec:authorize access="isAuthenticated() && principal.username == #board.counsel_userId">
 					<a class="btn btn-outline-warning" href="${pageContext.request.contextPath}/board/modify?counsel_bno=${board.counsel_bno}&counsel_userId=${board.counsel_userId}">수정</a>
 					</sec:authorize>
-					<sec:authorize access="hasRole('ROLE_ADMIN') or principal.username == #board.counsel_userId">
+					<sec:authorize access="hasRole('ROLE_ADMIN') or isAuthenticated() && principal.username == #board.counsel_userId">
 						<button type="submit" class="btn btn-outline-danger" id="btn-remove" formaction="remove">삭제</button>
 					</sec:authorize>
 					<a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/board/list">목록</a>
@@ -42,7 +43,10 @@
 				<h6 class="m-0 text-success float-left">댓글 작성</h6>
 			</div>
 			<div class="card-body list-group p-3 chat"></div>
-
+			<sec:authorize access="!isAuthenticated()">
+			<a href="${pageContext.request.contextPath}/member/login" class="text-center py-3">댓글 작성을 하려면 로그인을 해주세요</a>
+			</sec:authorize>
+			<sec:authorize access="hasRole('ROLE_ADMIN') or isAuthenticated()">
 			<div class="row py-2 card-body reply-register-area">
 				<div class="col-3">
 					<textarea class="form-control" rows="2" placeholder="작성자"
@@ -56,22 +60,37 @@
 					<button type="button" id="reply-add" class="btn btn-outline-success">작성</button>
 				</div>
 			</div>
+			</sec:authorize>
 		</div>
 	</div>
-
+	
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal.username" var="replyer" />
+	</sec:authorize>
+	
 	<script src="../resources/js/reply.js"></script>
 	<script>
+		var headerName = $("meta[name='_csrf_header']").attr("content");
+		var token = $("meta[name='_csrf']").attr("content");
+		
+		$(document).ajaxSend(function(e, xhr) {
+			xhr.setRequestHeader(headerName, token);
+		});
+		
 		var bno = '${board.counsel_bno}'
+		var replyer = '${replyer}';
 		
 		$(function() {
 			// 단일 댓글 생성
 			function getReplyStr(reply) {
 				var str = "";
 				str += '<div class="list-group-item p-0 bg-success text-white p-3" data-rno="' + reply.counsel_reply_rno + '">';
-				str += '	<strong>' + reply.counsel_reply_writer + '</strong>';
+				str += '	<strong>' + reply.counsel_reply_writer + ' / id : ' + reply.counsel_reply_userId + '</strong>';
 				str += '	<small class="float-end">' + reply.counsel_reply_regDate + '&nbsp';
+				if(replyer == reply.counsel_reply_userId) {
 				str += '		<a class="btn-reply-modify text-white" href="#" style="text-decoration:none">수정</a>';
 				str += '		<a class="btn-reply-remove text-white" href="#" style="text-decoration:none">삭제</a>';
+				};
 				str += '	</small>';
 				str += '</div>';
 				str += '<div class="reply-content">';
@@ -112,7 +131,10 @@
 					$("#reply-content").focus();
 					return;
 				}
-				var reply = {counsel_reply_bno:bno, counsel_reply_content:replyContent, counsel_reply_writer:replyWriter};
+				var reply = {
+						counsel_reply_bno:bno, counsel_reply_content:replyContent,
+						counsel_reply_writer:replyWriter, counsel_reply_userId:replyer
+				};
 				replyService.add(reply, function(result) {
 					alert("댓글 등록 완료");
 					$("#reply-content").val("");

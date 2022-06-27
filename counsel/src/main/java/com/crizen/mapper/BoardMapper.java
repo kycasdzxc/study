@@ -9,7 +9,7 @@ import com.crizen.domain.Slang;
 
 public interface BoardMapper {
 	
-	List<Counsel> getList();
+	List<Counsel> getList(Counsel counsel);
 	
 	Counsel read(int counsel_bno);
 	

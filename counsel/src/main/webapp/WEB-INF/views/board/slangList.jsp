@@ -35,6 +35,13 @@
 		</div>
 	</div>
 	<script>
+		var headerName = $("meta[name='_csrf_header']").attr("content");
+		var token = $("meta[name='_csrf']").attr("content");
+		
+		$(document).ajaxSend(function(e, xhr) {
+			xhr.setRequestHeader(headerName, token);
+		});
+	
 		$(function() {
 			$("#slangList a").click(function() {
 				var checkRemove = confirm("해당 단어를 삭제하시겠습니까? (비속어: " + $(this).text() + ")");

@@ -25,8 +25,9 @@ public class BoardController {
 	private ReplyService replyService;
 	
 	@GetMapping("list")
-	public String list(Model model) {
-		model.addAttribute("boards", boardService.getList());
+	public String list(Model model, Counsel counsel) {
+		model.addAttribute("boards", boardService.getList(counsel));
+		model.addAttribute("counsel", counsel);
 		return "/board/list";
 	}
 	
@@ -43,7 +44,6 @@ public class BoardController {
 	}
 	
 	@GetMapping("get")
-	@PreAuthorize("isAuthenticated()")
 	public void get(int counsel_bno, Model model, Principal principal) {
 		model.addAttribute("board", boardService.get(counsel_bno));
 		model.addAttribute("principal", principal);

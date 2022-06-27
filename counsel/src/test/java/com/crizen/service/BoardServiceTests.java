@@ -28,7 +28,8 @@ public class BoardServiceTests {
 	
 	@Test
 	public void testGetList() {
-		boardService.getList().forEach(log::info);
+		Counsel counsel = new Counsel();
+		boardService.getList(counsel).forEach(log::info);
 	}
 	
 	@Test

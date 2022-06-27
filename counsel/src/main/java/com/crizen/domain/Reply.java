@@ -13,4 +13,6 @@ public class Reply {
 	private String counsel_reply_writer;
 	private String counsel_reply_regDate;
 	private int counsel_reply_bno;
+	
+	private String counsel_reply_userId;
 }
