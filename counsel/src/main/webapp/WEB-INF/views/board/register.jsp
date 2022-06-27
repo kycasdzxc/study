@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +19,7 @@
 				<textarea class="form-control" rows="3" name="counsel_content"></textarea>
 				<h5 class="mt-3">- 작성자</h5>
 				<input type="text" class="form-control px-3 py-1" name="counsel_writer">
+				<input type="hidden" class="form-control px-3 py-1" name="counsel_userId" value="${userId}" readonly>
 				<div class="pt-3">
 					<button type="submit" class="btn btn-outline-primary" id="btn-register">작성</button>
 					<a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/board/list">목록</a>

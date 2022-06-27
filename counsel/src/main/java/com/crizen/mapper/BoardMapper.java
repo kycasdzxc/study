@@ -25,6 +25,8 @@ public interface BoardMapper {
 	
 	List<Slang> getSlangList();
 	
+	int changeSlang(Counsel counsel);
+
 	int addSlang(Slang slang);
 	
 	int removeSlang(Slang slang);

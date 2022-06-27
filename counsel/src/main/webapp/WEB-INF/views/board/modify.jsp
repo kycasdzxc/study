@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,12 +20,11 @@
 				<h5 class="mt-3">- 글내용</h5>
 				<textarea class="form-control" rows="3" name="counsel_content">${board.counsel_content}</textarea>
 				<h5 class="mt-3">- 작성자</h5>
-				<input type="text" class="form-control px-3 py-1" name="counsel_writer" value="${board.counsel_writer}" readonly>
+				<input type="text" class="form-control px-3 py-1" name="counsel_writer" value="${board.counsel_writer}">
 				<h5 class="mt-3">- 작성시간</h5>
 				<input type="text" class="form-control px-3 py-1" value="${board.counsel_regDate}" readonly>
 				<div class="pt-3">
 					<button type="submit" class="btn btn-outline-warning" id="btn-modify">수정</button>
-					<button type="submit" class="btn btn-outline-danger" id="btn-remove" formaction="remove">삭제</button>
 					<a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/board/list">목록</a>
 				</div>
 			</div>

@@ -1,5 +1,8 @@
 package com.crizen.controller;
 
+import java.security.Principal;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +31,9 @@ public class BoardController {
 	}
 	
 	@GetMapping("register")
-	public void register() {
-		
+	@PreAuthorize("isAuthenticated()")
+	public void register(Model model, Principal principal) {
+		model.addAttribute("userId", principal.getName());
 	}
 	
 	@PostMapping("register")
@@ -38,8 +42,16 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@GetMapping({"get", "modify"})
-	public void get(int counsel_bno, Model model) {
+	@GetMapping("get")
+	@PreAuthorize("isAuthenticated()")
+	public void get(int counsel_bno, Model model, Principal principal) {
+		model.addAttribute("board", boardService.get(counsel_bno));
+		model.addAttribute("principal", principal);
+	}
+	
+	@GetMapping("modify")
+	@PreAuthorize("principal.username == #counsel_userId")
+	public void modify(int counsel_bno, String counsel_userId, Model model) {
 		model.addAttribute("board", boardService.get(counsel_bno));
 	}
 	
@@ -50,13 +62,15 @@ public class BoardController {
 	}
 	
 	@PostMapping("remove")
-	public String remove(int counsel_bno) {
+	@PreAuthorize("principal.username == #counsel_userId or hasRole('ADMIN')")
+	public String remove(int counsel_bno, String counsel_userId) {
 		replyService.removeAll(counsel_bno);
 		boardService.remove(counsel_bno);
 		return "redirect:/board/list";
 	}
 	
 	@GetMapping("slangList")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void slangList(Model model) {
 		model.addAttribute("slangs", boardService.getSlangList());
 	}
