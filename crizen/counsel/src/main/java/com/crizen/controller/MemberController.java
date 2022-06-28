@@ -1,6 +1,7 @@
 package com.crizen.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ public class MemberController {
 	
 	@GetMapping("login")
 	public String getLogin() {
-		return "member/login";
+		return "/member/login";
 	}
 	
 	@PostMapping("login")
@@ -46,12 +47,17 @@ public class MemberController {
 	
 	@GetMapping("changePw")
 	public String changePw() {
-		return "member/changePw";
+		return "/member/changePw";
 	}
 	
 	@PostMapping("changePw")
 	public String changePw(UserInfo user) {
 		memberService.changePw(user);
 		return "redirect:/member/login";
+	}
+	
+	@GetMapping("403")
+	public String error403() {
+		return "/error/403";
 	}
 }
