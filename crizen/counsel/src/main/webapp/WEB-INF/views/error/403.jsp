@@ -8,7 +8,7 @@
 	<title>error : 403</title>
 </head>
 <body>
-	<h1 class="p-4">접근 권한이 없습니다. <a href="../board/list" style="text-decoration:none;">
+	  <h1 class="p-4">접근 권한이 없습니다. <a href="../board/list" style="text-decoration:none;">
 		<small>돌아가기</small></a></h1>
 </body>
 </html>
