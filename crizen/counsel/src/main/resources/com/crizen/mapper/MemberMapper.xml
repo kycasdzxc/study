@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.crizen.mapper.MemberMapper">
+	
+	<select id="getList" resultMap="userMap">
+		SELECT * FROM USER_INFO
+		JOIN USER_AUTH USING(USER_ID)
+	</select>
+	
+	<resultMap type="user" id="userMap">
+		<result property="user_id" column="user_id" />
+		<result property="user_pw" column="user_pw" />
+		<result property="user_name" column="user_name" />
+		<result property="user_regDate" column="user_regdate" />
+		<result property="user_enabled" column="user_enabled" />
+		<result property="user_failedCnt" column="user_failedcnt" />
+		<collection property="user_auths" resultMap="authMap" />
+	</resultMap>
+	
+	<resultMap type="userAuth" id="authMap">
+		<result property="user_id" column="user_id" />
+		<result property="user_auth" column="user_auth" />
+	</resultMap>
+	
+	<select id="read" resultMap="userMap">
+		SELECT * FROM USER_INFO
+		JOIN USER_AUTH USING(USER_ID)
+		WHERE USER_ID = #{user_id}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO USER_INFO (USER_ID, USER_PW, USER_NAME) VALUES (#{user_id}, #{user_pw}, #{user_name})
+	</insert>
+	
+	<insert id="insertAuth">
+		INSERT INTO USER_AUTH VALUES (#{user_id}, 'ROLE_MEMBER')
+	</insert>
+	
+	<update id="failedLogin">
+		UPDATE USER_INFO SET
+		USER_FAILEDCNT = USER_FAILEDCNT + 1 WHERE USER_ID = #{user_id}
+	</update>
+	
+	<update id="resetLoginCnt">
+		UPDATE USER_INFO SET
+		USER_FAILEDCNT = 0 WHERE USER_ID = #{user_id}
+	</update>
+	
+	<update id="lockedUser">
+		UPDATE USER_INFO SET
+		USER_ENABLED = 0 WHERE USER_ID = #{user_id}
+	</update>
+	
+	<update id="unlockedUser">
+		UPDATE USER_INFO SET
+		USER_ENABLED = 1 WHERE USER_ID = #{user_id}
+	</update>
+	
+	<update id="changePw">
+		UPDATE USER_INFO SET
+		USER_PW = #{user_pw} WHERE USER_ID = #{user_id}
+	</update>
+	
+</mapper>
