@@ -26,7 +26,7 @@
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<a href="${pageContext.request.contextPath}/board/slangList" class="btn btn-outline-info mt-3 mb-2 me-2 float-end">비속어 관리</a>
-			<a href="${pageContext.request.contextPath}/board/slangList" class="btn btn-outline-warning mt-3 mb-2 me-2 float-end">회원 관리</a>
+			<%-- <a href="${pageContext.request.contextPath}/board/slangList" class="btn btn-outline-warning mt-3 mb-2 me-2 float-end">회원 관리</a> --%>
 			</sec:authorize>
 		</div>
 		<table class="table table-bordered table-hover">
