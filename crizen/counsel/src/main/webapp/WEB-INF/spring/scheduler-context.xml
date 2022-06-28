@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+		<!-- Spring Quartz -->
+	<!-- Job -->
+	<bean id="removeOvertimeQuartz" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="quartz" />
+	    <property name="targetMethod" value="removeOvertime" />
+	    <property name="concurrent" value="false" />
+	</bean>
+
+	<!-- Trigger -->
+	<bean id="removeOvertimeTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	    <property name="jobDetail" ref="removeOvertimeQuartz" />
+	    <property name="cronExpression" value="0 0 8 * * ?" />
+	</bean>
+	
+	<!-- Job -->
+	<bean id="modifySlangQuartz" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="quartz" />
+	    <property name="targetMethod" value="modifySlang" />
+	    <property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- Trigger -->
+	<bean id="modifySlangTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	    <property name="jobDetail" ref="modifySlangQuartz" />
+	    <property name="cronExpression" value="0 0/3 * * * ?" />
+	</bean>
+    
+	<!-- Scheduler -->
+	<bean id="boardScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    <property name="triggers">
+			<list>
+				<ref bean="removeOvertimeTrigger" />
+				<ref bean="modifySlangTrigger" />
+			</list>
+	    </property>
+	</bean>
+	
+</beans>
