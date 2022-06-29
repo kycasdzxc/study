@@ -54,6 +54,6 @@ public class BoardServiceTests {
 	
 	@Test
 	public void testDelete() {
-		boardService.remove(17);
+		boardService.remove(1042);
 	}
 }
