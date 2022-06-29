@@ -31,7 +31,10 @@
 					<a class="btn btn-outline-warning" href="${pageContext.request.contextPath}/board/modify?counsel_bno=${board.counsel_bno}&counsel_userId=${board.counsel_userId}">수정</a>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_ADMIN') or isAuthenticated() && principal.username == #board.counsel_userId">
+					<form>
 						<button type="submit" class="btn btn-outline-danger" id="btn-remove" formaction="remove">삭제</button>
+						<sec:csrfInput/>
+					</form>
 					</sec:authorize>
 					<a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/board/list">목록</a>
 				</div>
