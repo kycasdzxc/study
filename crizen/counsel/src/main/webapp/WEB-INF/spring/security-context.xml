@@ -18,10 +18,6 @@
 		<security:csrf />
 	</security:http>
 	
-	<bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
-		<property name="errorPage" value="/WEB-INF/views/error/403.jsp" />
-	</bean>
-	
 	<bean class="com.crizen.security.CustomUserDetailsService" id="userDetailsService" />
 	<bean class="org.springframework.security.crypto.password.StandardPasswordEncoder" id="passwordEncoder"/>
 	
