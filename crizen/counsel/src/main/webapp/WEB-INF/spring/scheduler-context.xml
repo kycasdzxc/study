@@ -36,7 +36,8 @@
 	<bean id="boardScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 	    <property name="triggers">
 			<list>
-				<ref bean="removeOvertimeTrigger" />
+				<!-- 스케쥴러: 5일 지난 게시글 삭제 -->
+				<!-- <ref bean="removeOvertimeTrigger" /> -->
 				<ref bean="modifySlangTrigger" />
 			</list>
 	    </property>

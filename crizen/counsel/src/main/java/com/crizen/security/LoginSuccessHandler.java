@@ -49,6 +49,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		else if(prevPage!=null) {
 			uri = prevPage;
 		}
-		response.sendRedirect(uri);
+		response.sendRedirect("http://counsel.yermi.co.kr");
 	}
 }
