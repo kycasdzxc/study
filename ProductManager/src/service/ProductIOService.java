@@ -8,24 +8,24 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import vo.Product;
+import vo.ProductIO;
 
 @SuppressWarnings("unchecked")
-public class ProductService {
+public class ProductIOService {
 	// 상품 데이터
-	List<Product> products = new ArrayList<Product>();
+	List<ProductIO> products = new ArrayList<ProductIO>();
 	
 	{
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("products.ser"));
-			products = (List<Product>) ois.readObject();
-			System.out.println("상품 데이터 불러오기 완료");
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("productsIO.ser"));
+			products = (List<ProductIO>) ois.readObject();
+			System.out.println("입출고 데이터 불러오기 완료");
 			ois.close();
 		} catch (FileNotFoundException e) {
-			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
-			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
-			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
-			System.out.println("상품 데이터 초기화 완료");
+			products.add(new ProductIO(1 ,"nb_ss7", "19/07/01", 30, "입고"));
+			products.add(new ProductIO(2 ,"nb_ss7", "19/07/02",  3, "출고"));
+			products.add(new ProductIO(3 ,"pc_ibm", "19/07/02", 10, "입고"));
+			System.out.println("입출고 데이터 초기화 완료");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,7 +64,7 @@ public class ProductService {
 	private void save() {
 		ObjectOutputStream oos;
 		try {
-		oos = new ObjectOutputStream(new FileOutputStream("products.ser"));
+		oos = new ObjectOutputStream(new FileOutputStream("productsIO.ser"));
 		oos.writeObject(products);
 		} catch (Exception e) {
 			e.printStackTrace();

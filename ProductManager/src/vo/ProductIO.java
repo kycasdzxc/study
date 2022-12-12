@@ -7,12 +7,12 @@ import lombok.Setter;
 
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
-public class Product {
+public class ProductIO {
 	
+	private int num;		// 입출고번호
 	private String id;		// 상품아이디
-	private String name;	// 상품명
-	private int price;		// 가격
-	private String detail;	// 상세정보
-	private int stock;		// 재고
+	private String date;	// 입출고날짜
+	private int amount;		// 수량
+	private String status;	// 입출고
 	
 }
