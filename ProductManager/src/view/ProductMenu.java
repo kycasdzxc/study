@@ -7,12 +7,12 @@ import service.ProductService;
 
 public class ProductMenu {
 	
+	Scanner sc = new Scanner(System.in);
+
+	ProductService service = new ProductService();
+	ProductIOService serviceIO = new ProductIOService();
+	
 	public void start() {
-		ProductService service = new ProductService();
-		ProductIOService serviceIO = new ProductIOService();
-		
-		Scanner sc = new Scanner(System.in);
-		
 		boolean flag = true;
 		
 		while(flag) {
@@ -28,6 +28,7 @@ public class ProductMenu {
 				case 2:
 					System.out.println("상품 추가");
 					service.register();
+					serviceIO.register();
 					break;
 					
 				case 3:
@@ -42,7 +43,8 @@ public class ProductMenu {
 					
 				case 5:
 					System.out.println("상품 검색");
-					service.search();
+					String keyword = sc.nextLine();
+					service.search(keyword);
 					break;
 					
 				case 6:
@@ -50,7 +52,6 @@ public class ProductMenu {
 					break;
 			}
 		}
-		sc.close();
 	}
 	
 }

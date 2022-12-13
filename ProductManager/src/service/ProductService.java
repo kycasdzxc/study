@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import vo.Product;
 
@@ -14,6 +15,8 @@ import vo.Product;
 public class ProductService {
 	// 상품 데이터
 	List<Product> products = new ArrayList<Product>();
+	
+	Scanner sc = new Scanner(System.in);
 	
 	{
 		try {
@@ -34,13 +37,29 @@ public class ProductService {
 	
 	// 상품 전체 조회
 	public void list() {
-		
+		for(int i = 0 ; i < products.size() ; i++) {
+			System.out.println(products.get(i));
+		}
 	}
 	
 	// 상품 추가
 	public void register() {
+		String id = sc.nextLine();
 		
-		save();
+		if(findBy(id) == null) {
+			Product product = new Product();
+			product.setId(id);
+			
+			String name = sc.nextLine();
+			int price;
+			String detail;
+			int stock;
+			
+//			products.add(product);
+			save();
+		} else {
+			System.out.println("이미 존재하는 상품입니다.");
+		}
 	}
 	
 	// 상품 수정
@@ -56,8 +75,34 @@ public class ProductService {
 	}
 	
 	// 상품 검색
-	public void search() {
+	public void search(String keyword) {
+		StringBuilder sb = new StringBuilder();
+		keyword = transWord(keyword);
 		
+		for(Product p : products) {
+			if(transWord(p.getName()).contains(keyword)) {
+				sb.append(p).append("\n");
+			}
+		}
+		
+		System.out.println(sb);
+	}
+	
+	// 대소문자 통일, 공백 제거
+	private String transWord(String word) {
+		return word.toLowerCase().trim().replace(" ", "");
+	}
+	
+	private Product findBy(String id) {
+		Product product = null;
+		
+		for(Product p : products) {
+			if(id.equals(p.getId())) {
+				product = p;
+				break;
+			}
+		}
+		return product;
 	}
 	
 	// 데이터 저장
