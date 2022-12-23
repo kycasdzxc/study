@@ -86,6 +86,35 @@ public class ProductService {
 		System.out.print("1)상품명 2)가격 3)상품정보 4)재고 > ");
 		int num = Integer.parseInt(sc.nextLine());
 		
+		switch (num) {
+		case 1:
+			System.out.print("변경할 상품명 > ");
+			String name = sc.nextLine();
+			product.setName(name);
+			break;
+			
+		case 2:
+			System.out.print("변경할 가격 > ");
+			String price = sc.nextLine();
+			product.setPrice(Integer.parseInt(price));
+			break;
+			
+		case 3:
+			System.out.print("변경할 상품정보 > ");
+			String detail = sc.nextLine();
+			product.setDetail(detail);
+			break;
+			
+		case 4:
+			System.out.print("변경할 재고 > ");
+			String stock = sc.nextLine();
+			product.setStock(Integer.parseInt(stock));
+			break;
+			
+		default:
+			System.out.println("잘못 입력하셨습니다.");
+			break;
+		}
 		save();
 	}
 	
