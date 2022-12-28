@@ -35,8 +35,20 @@ public class ProductService {
 		}
 	}
 	
+	public static void main(String[] args) {
+		ProductService service = new ProductService();
+		int amount = 5;
+		int endPage = (service.products.size() / amount) + 1;
+		System.out.println(endPage);
+	}
+	
 	// 상품 전체 조회
-	public void list() {
+	public void list(int pageNum) {
+		int amount = 5;
+		int lastPage = (products.size() / amount) + 1;
+		
+		int start = amount * (1 - pageNum);
+		
 		for(int i = 0 ; i < products.size() ; i++) {
 			System.out.println(products.get(i));
 		}
@@ -86,6 +98,34 @@ public class ProductService {
 		System.out.print("1)상품명 2)가격 3)상품정보 4)재고 > ");
 		int num = Integer.parseInt(sc.nextLine());
 		
+		switch (num) {
+		case 1:
+			System.out.print("상품명 > ");
+			String name = sc.nextLine();
+			product.setName(name);
+			break;
+
+		case 2:
+			System.out.print("가격 > ");
+			int price = Integer.parseInt(sc.nextLine());
+			product.setPrice(price);
+			break;
+			
+		case 3:
+			System.out.print("상품정보 > ");
+			String detail = sc.nextLine();
+			product.setDetail(detail);
+			break;
+			
+		case 4:
+			System.out.print("재고 > ");
+			int stock = Integer.parseInt(sc.nextLine());
+			product.setStock(stock);
+			break;
+			
+		default:
+			break;
+		}
 		save();
 	}
 	
@@ -107,7 +147,10 @@ public class ProductService {
 	}
 	
 	// 상품 검색
-	public void search(String keyword) {
+	public void search() {
+		System.out.print("검색할 상품명을 입력해주세요. > ");
+		String keyword = sc.nextLine();
+		
 		StringBuilder sb = new StringBuilder();
 		keyword = transWord(keyword);
 		

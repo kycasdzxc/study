@@ -22,7 +22,7 @@ public class ProductMenu {
 			switch(index) {
 				case 1:
 					System.out.println("상품 전체 조회");
-					service.list();
+					service.list(1);
 					break;
 					
 				case 2:
@@ -43,8 +43,7 @@ public class ProductMenu {
 					
 				case 5:
 					System.out.println("상품 검색");
-					String keyword = sc.nextLine();
-					service.search(keyword);
+					service.search();
 					break;
 					
 				case 6:
