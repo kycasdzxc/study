@@ -100,19 +100,19 @@ public class ProductService {
 		
 		switch (num) {
 		case 1:
-			System.out.print("상품명 > ");
+			System.out.print("변경할 상품명 > ");
 			String name = sc.nextLine();
 			product.setName(name);
 			break;
-
+			
 		case 2:
-			System.out.print("가격 > ");
-			int price = Integer.parseInt(sc.nextLine());
-			product.setPrice(price);
+			System.out.print("변경할 가격 > ");
+			String price = sc.nextLine();
+			product.setPrice(Integer.parseInt(price));
 			break;
 			
 		case 3:
-			System.out.print("상품정보 > ");
+			System.out.print("변경할 상품정보 > ");
 			String detail = sc.nextLine();
 			product.setDetail(detail);
 			break;
@@ -124,6 +124,7 @@ public class ProductService {
 			break;
 			
 		default:
+			System.out.println("잘못 입력하셨습니다.");
 			break;
 		}
 		save();
