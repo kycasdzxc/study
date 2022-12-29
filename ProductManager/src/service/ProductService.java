@@ -28,6 +28,33 @@ public class ProductService {
 			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
 			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
 			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
+			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
+			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
+			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
+			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
+			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
+			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
+			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
+			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
+			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
+			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
+			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
+			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
+			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
+			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
+			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
+			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
+			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
+			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
+			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
+			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
+			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
+			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
+			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
+			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
+			products.add(new Product("nb_ss7",  "삼성노트북", 1570000, "시리즈7", 10));
+			products.add(new Product("nb_ama4", "맥북에어",   1200000,  "xcode4", 20));
+			products.add(new Product("pc_ibm",  "ibmPC",       750000, "window8",  5));
 			System.out.println("상품 데이터 초기화 완료");
 			
 		} catch (Exception e) {
@@ -47,10 +74,22 @@ public class ProductService {
 		int amount = 5;
 		int lastPage = (products.size() / amount) + 1;
 		
-		int start = amount * (1 - pageNum);
+		int start = amount * (pageNum - 1);
+		int end = lastPage > pageNum ? amount * pageNum : products.size() - (amount - products.size() % amount);
 		
-		for(int i = 0 ; i < products.size() ; i++) {
-			System.out.println(products.get(i));
+		for(int i = start ; i < end ; i++) {
+			System.out.println(i + 1 + ", " + products.get(i));
+		}
+		
+		System.out.println("products.size() : " + products.size());
+		System.out.println("lastPage : " + lastPage);
+		System.out.println("start : " + start);
+		System.out.println("end : " + end);
+		
+		int idx = Integer.parseInt(sc.nextLine());
+		
+		if(idx != 0) {
+			list(idx);
 		}
 	}
 	
