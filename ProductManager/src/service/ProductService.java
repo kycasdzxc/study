@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static utils.StringUtil.*;
 import vo.Product;
 
 @SuppressWarnings("unchecked")
@@ -44,23 +45,25 @@ public class ProductService {
 	
 	// 상품 전체 조회
 	public void list(int pageNum) {
-		int amount = 10;
+		int amount = 5;
 		int lastPage = (products.size() / amount) + 1;
 		
 		int start = amount * (pageNum - 1);
 		int end = lastPage > pageNum ? amount * pageNum : (amount * (lastPage - 1) + products.size() % amount);
 		
-		System.out.println("products.size() : " + products.size());
-		System.out.println("lastPage : " + lastPage);
-		System.out.println("start : " + start);
-		System.out.println("end : " + end);
+		System.out.println("현재페이지 : " + pageNum + " / 마지막페이지 : " + lastPage + " / 총 상품개수 : " + products.size());
 		
 		for(int i = start ; i < end ; i++) {
-			System.out.println(i + 1 + ". " + products.get(i));
+			System.out.println(convert(1 + i + ".", 3) + " " + products.get(i));
 		}
 		
-		System.out.print("현재페이지 : " + pageNum + " / 마지막페이지 : " + lastPage + " / 총 상품개수 : " + products.size() + " > ");
-		int idx = Integer.parseInt(sc.nextLine());
+		int idx = pageNum;
+		
+		try {
+			idx = nextInt("이동할 페이지를 입력해주세요. [이전으로 돌아가기 '0'] > ", 0, lastPage);
+		} catch (Exception e) {
+			System.err.println(" > " + e.getMessage());
+		}
 		
 		if(idx != 0) {
 			list(idx);
@@ -69,21 +72,13 @@ public class ProductService {
 	
 	// 상품 추가
 	public void register() {
-		System.out.print("상품 ID를 입력해주세요. > ");
-		String id = sc.nextLine();
+		String id = nextLine("상품 ID를 입력해주세요. > ");
 		
 		if(findBy(id) == null) {
-			System.out.print("상품명을 입력해주세요. > ");
-			String name = sc.nextLine();
-			
-			System.out.print("가격을 입력해주세요. > ");
-			int price = Integer.parseInt(sc.nextLine());
-			
-			System.out.print("상품정보를 입력해주세요. > ");
-			String detail = sc.nextLine();
-			
-			System.out.print("재고를 입력해주세요. > ");
-			int stock = Integer.parseInt(sc.nextLine());;
+			String name = nextLine("상품명을 입력해주세요. > ");
+			int price = nextInt("가격을 입력해주세요. > ", 0, Integer.MAX_VALUE);
+			String detail = nextLine("상품정보를 입력해주세요. > ");
+			int stock = nextInt("재고를 입력해주세요. > ", 0, Integer.MAX_VALUE);
 			
 			// Product에 값 세팅
 			Product product = new Product();
@@ -102,37 +97,31 @@ public class ProductService {
 	
 	// 상품 수정
 	public void modify() {
-		System.out.print("수정할 상품의 ID를 입력해주세요. > ");
-		String id = sc.nextLine();
+		String id = nextLine("수정할 상품의 ID를 입력해주세요. > ");
 		
 		Product product = findBy(id);
 		
 		System.out.println("수정할 항목을 선택해주세요.");
-		System.out.print("1)상품명 2)가격 3)상품정보 4)재고 > ");
-		int num = Integer.parseInt(sc.nextLine());
+		int num = nextInt("1)상품명 2)가격 3)상품정보 4)재고 > ", 1, 4);
 		
 		switch (num) {
 		case 1:
-			System.out.print("변경할 상품명 > ");
-			String name = sc.nextLine();
+			String name = nextLine("변경할 상품명 > ");
 			product.setName(name);
 			break;
 			
 		case 2:
-			System.out.print("변경할 가격 > ");
-			String price = sc.nextLine();
-			product.setPrice(Integer.parseInt(price));
+			int price = nextInt("변경할 가격 > ", 0, Integer.MAX_VALUE);
+			product.setPrice(price);
 			break;
 			
 		case 3:
-			System.out.print("변경할 상품정보 > ");
-			String detail = sc.nextLine();
+			String detail = nextLine("변경할 상품정보 > ");
 			product.setDetail(detail);
 			break;
 			
 		case 4:
-			System.out.print("재고 > ");
-			int stock = Integer.parseInt(sc.nextLine());
+			int stock = nextInt("변경할 재고 > ", 0, Integer.MAX_VALUE);
 			product.setStock(stock);
 			break;
 			
@@ -145,8 +134,7 @@ public class ProductService {
 	
 	// 상품 삭제
 	public void delete() {
-		System.out.print("삭제할 상품의 ID를 입력해주세요. > ");
-		String id = sc.nextLine();
+		String id = nextLine("삭제할 상품의 ID를 입력해주세요. > ");
 		
 		int index = findByIndex(id);
 		
@@ -162,8 +150,7 @@ public class ProductService {
 	
 	// 상품 검색
 	public void search() {
-		System.out.print("검색할 상품명을 입력해주세요. > ");
-		String keyword = sc.nextLine();
+		String keyword = nextLine("검색할 상품명을 입력해주세요. > ");
 		
 		StringBuilder sb = new StringBuilder();
 		keyword = transWord(keyword);

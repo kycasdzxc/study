@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static utils.StringUtil.*;
+
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 public class Product implements Serializable {
@@ -21,7 +23,7 @@ public class Product implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", detail=" + detail + ", stock=" + stock + "]";
+		return "[아이디 : " + convert(id, 8) + ", 상품명 : " + convert(name, 10) + ", 가격 : " + convert(price+"", 8) + ", 상세정보 : " + convert(detail, 8) + ", 재고 : " + convert(stock+"", 3) + "]";
 	}
 	
 }

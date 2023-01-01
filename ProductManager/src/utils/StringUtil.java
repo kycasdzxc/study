@@ -25,10 +25,6 @@ public class StringUtil {
 		return str;
 	}
 	
-	public static int nextInt(String input) {
-		return nextInt(input, 0, 100);
-	}
-	
 	public static int nextInt(String input, int start, int end) {
 		int result = Integer.parseInt(nextLine(input));
 		if (start > result || end < result)
