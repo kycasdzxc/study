@@ -46,7 +46,6 @@ public class ProductService {
 		int start = amount * (pageNum - 1);
 		int end = lastPage > pageNum ? amount * pageNum : (amount * (lastPage - 1) + products.size() % amount);
 		
-		
 		for(int i = start ; i < end ; i++) {
 			System.out.println(convert(1 + i + ".", 3) + " " + products.get(i));
 		}
@@ -56,9 +55,6 @@ public class ProductService {
 		try {
 			System.out.println("현재페이지 : " + pageNum + " / 마지막페이지 : " + lastPage + " / 총 상품개수 : " + products.size());
 			idx = nextInt("이동할 페이지를 입력해주세요. [이전으로 돌아가기 '0'] > ", 0, lastPage);
-
-		} catch (NumberFormatException e) {
-			System.err.println(" > 숫자 형식으로 입력해주세요.");
 			
 		} catch (RangeException e) {
 			System.err.println(" > " + e.getMessage());
@@ -80,18 +76,9 @@ public class ProductService {
 				String detail = nextLine("상품정보를 입력해주세요. > ");
 				int stock = nextInt("재고를 입력해주세요. > ", 0, Integer.MAX_VALUE);
 				
-				// Product에 값 세팅
-				Product product = new Product();
-				product.setId(id);
-				product.setName(name);
-				product.setPrice(price);
-				product.setDetail(detail);
-				product.setStock(stock);
-				
-				products.add(product);
+				products.add(new Product(id, name, price, detail, stock));
 				save();
-			} catch (NumberFormatException e) {
-				System.err.println(" > 숫자 형식으로 입력해주세요.");
+				
 			} catch (RangeException e) {
 				System.err.println(" > 음수 값은 입력할 수 없습니다.");
 			}
@@ -106,33 +93,41 @@ public class ProductService {
 		
 		Product product = findBy(id);
 		
-		System.out.println("수정할 항목을 선택해주세요.");
-		int num = nextInt("1)상품명 2)가격 3)상품정보 4)재고 > ", 1, 4);
-		
-		switch (num) {
-		case 1:
-			String name = nextLine("변경할 상품명 > ");
-			product.setName(name);
-			break;
+		if(product != null) {
+			System.out.println("수정할 항목을 선택해주세요.");
+			int num = nextInt("1)상품명 2)가격 3)상품정보 4)재고 > ", 1, 4);
 			
-		case 2:
-			int price = nextInt("변경할 가격 > ", 0, Integer.MAX_VALUE);
-			product.setPrice(price);
-			break;
-			
-		case 3:
-			String detail = nextLine("변경할 상품정보 > ");
-			product.setDetail(detail);
-			break;
-			
-		case 4:
-			int stock = nextInt("변경할 재고 > ", 0, Integer.MAX_VALUE);
-			product.setStock(stock);
-			break;
-			
-		default:
-			System.out.println("잘못 입력하셨습니다.");
-			break;
+			try {
+				switch (num) {
+				case 1:
+					String name = nextLine("변경할 상품명 > ");
+					product.setName(name);
+					break;
+					
+				case 2:
+					int price = nextInt("변경할 가격 > ", 0, Integer.MAX_VALUE);
+					product.setPrice(price);
+					break;
+					
+				case 3:
+					String detail = nextLine("변경할 상품정보 > ");
+					product.setDetail(detail);
+					break;
+					
+				case 4:
+					int stock = nextInt("변경할 재고 > ", 0, Integer.MAX_VALUE);
+					product.setStock(stock);
+					break;
+					
+				default:
+					System.out.println("잘못 입력하셨습니다.");
+					break;
+				}
+			} catch (RangeException e) {
+				System.err.println(" > 음수 값은 입력할 수 없습니다.");
+			}
+		} else {
+			System.out.println("존재하지 않는 ID입니다.");
 		}
 		save();
 	}
