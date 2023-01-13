@@ -40,4 +40,9 @@ public class HomeController {
 	public String paymentApi() {
 		return "iamport";
 	}
+	
+	@RequestMapping(value = "/navermaps", method = RequestMethod.GET)
+	public String naverMaps() {
+		return "naverMaps";
+	}
 }
